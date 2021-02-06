@@ -2,32 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PureJS</title>
-    <script type="text/html" id="home">
-      <h1>You must log in</h1>
-      <p><%= message %></p>
-      <form class="login-form">
-        <input
-          type="text"
-          placeholder="username"
-          id="username"
-          name="username"
-        />
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          name="password"
-        />
-        <button type="submit">log in</button>
-      </form>
-    </script>
-    <script type="text/html" id="success">
-      <h1><%= title %></h1>
-    </script>
-    <script type="text/html" id="404">
-      <h1>404 Not found</h1>
-    </script>
+    <home></home>
+    <success></success>
+    <pageNotFound></pageNotFound>
   </head>
   <body>
     <nav>

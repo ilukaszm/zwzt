@@ -1,5 +1,6 @@
 import { route } from "./router";
-import { API_URL } from "./utils";
+import { API_URL, redirectFn } from "./utils";
+import "./app.css";
 
 route("/", "home", function () {
   this.message = "";
@@ -14,22 +15,27 @@ route("/", "home", function () {
     const userData = { username, password };
 
     const logIn = async () => {
-      const response = await fetch(`${API_URL}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      try {
+        const response = await fetch(`${API_URL}/api/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
 
-      if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        this.message = "Bad login or password!";
+        if (!response.ok) {
+          this.message = "Bad login or password!";
+          this.$refresh();
+          return;
+        }
+
+        redirectFn("/#/success");
+      } catch (e) {
+        this.message = "Oops! Something went wrong. Please try again later.";
         this.$refresh();
-        throw new Error(message);
+        throw new Error(e);
       }
-
-      window.location.replace("#/success");
     };
 
     logIn();
@@ -37,7 +43,7 @@ route("/", "home", function () {
 });
 
 route("/success", "success", function () {
-  this.title = `You're log in!`;
+  this.title = `You're logged in!`;
 });
 
 route("*", "404", function () {});
